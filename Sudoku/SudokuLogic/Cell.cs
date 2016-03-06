@@ -10,29 +10,41 @@ namespace Sudoku.SudokuLogic
     public class Cell
     {
         #region Значение клетки
-        private uint? number;
+        private int? number;
 
-        public uint? Number
+        public int? Number
         {
             get { return number; }
-            set { number = value; }
+            set
+            {
+                if (value > 9 || value == 0)
+                { return; }
+                else
+                { number = value; }
+            }
         }
         #endregion
 
         #region Истинное начение клетки
-        private uint? trueNumber;
+        private int? trueNumber;
 
-        public uint? TrueNumber
+        public int? TrueNumber
         {
             get { return trueNumber; }
-            set { trueNumber = value; }
+            set
+            {
+                if (value > 9 || value == 0)
+                { trueNumber = null; }
+                else
+                { trueNumber = value; }
+            }
         }
         #endregion
 
         #region Возможные значения, добавляемые пользователем
-        private uint?[] probNumbers;
+        private int?[] probNumbers;
 
-        public uint?[] ProbNumbers
+        public int?[] ProbNumbers
         {
             get { return probNumbers; }
             set { probNumbers = value; }
@@ -40,12 +52,17 @@ namespace Sudoku.SudokuLogic
         
 	
         #endregion
-
-        public Cell(uint? _number, uint? _trueNumber, uint?[] _probNumbers)
+        #region Конструктор
+        public Cell(int? _number, int? _trueNumber, int?[] _probNumbers)
         {
             number = _number;
             trueNumber = _trueNumber;
             probNumbers = _probNumbers;
+        }
+        #endregion
+        public void SetValue(int? newNumber)
+        {
+            Number = newNumber;
         }
     }
 }
