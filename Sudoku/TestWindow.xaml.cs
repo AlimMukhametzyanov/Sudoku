@@ -22,7 +22,7 @@ namespace Sudoku
         int id;
         string solution;
         string current_game;
-        string difficulty = "сложная";
+        string difficulty = "simple";
 
         SqlMethods sqlMethods = new SqlMethods();
             
@@ -34,7 +34,7 @@ namespace Sudoku
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             TestData td = new TestData();
-            sqlMethods.OnCreateNewGame("111", "2222", difficulty, out id);
+            sqlMethods.OnCreateNewGame("111", "2222", "", difficulty, out id);
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
@@ -44,12 +44,25 @@ namespace Sudoku
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
         {
+            SavedGames sv = new SavedGames();
+            List<GameInfo> list = sqlMethods.LoadAllGames();
 
+            Dispatcher.Invoke(() =>
+                {
+                    for (int i = 0; i < list.Count; i++)
+			        {
+                        string str = String.Format("{0} | {1} | {2} | {3}", list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed);
+                        sv.cmbSetOfGames.Items.Add(str);
+			        }
+                    sv.cmbSetOfGames.SelectedIndex = 0;
+                });
+
+            sv.ShowDialog();
         }
 
         private void btnSaveGame_Click(object sender, RoutedEventArgs e)
         {
-
+            sqlMethods.SaveGame(current_game, id);
         }
     }
 }

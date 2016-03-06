@@ -20,7 +20,8 @@ namespace Sudoku
             AppDomain.CurrentDomain.SetData("DataDirectory", strPath);
         }
 
-        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
 
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
@@ -47,7 +48,7 @@ namespace Sudoku
             return id;
         }
 
-        public void OnCreateNewGame(string solution, string game, string difficulty, out int id)
+        public void OnCreateNewGame(string solution, string game, string name, string difficulty, out int id)
         {
             sc.Open();
             cmd.Connection = sc;
@@ -58,9 +59,20 @@ namespace Sudoku
             cmd.CommandText = "INSERT INTO Solution (Id, solution) VALUES ('" + id + "', '" + solution + "')";
             cmd.ExecuteNonQuery();
 
-            //сохранение текущей игры
-            cmd.CommandText = "INSERT INTO Game (Id, game, data_of_creation, last_alteration, solution_id, time) VALUES ('"+id+"','"+game+"','"+DateTime.Now+"','"+DateTime.Now+"','"+id+"','"+0+"')";
+            cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, time, difficulty, solution_id) VALUES ('" + id + "','" + "game_" + id + "','" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','" + 0 + "','" + difficulty + "','" + id + "')";
             cmd.ExecuteNonQuery();
+
+            ////сохранение текущей игры
+            //if (String.IsNullOrEmpty(name))
+            //{
+            //    cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, time, difficulty, solution_id) VALUES ('" + id + "','" + "game_" + DateTime.Now.ToShortDateString() + "','" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','"+0+"','"+difficulty+"','" + id + "')";
+            //}
+            //else
+            //{
+            //    cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, solution_id, time) VALUES ('" + id + "', '" + name + "', '" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','" + 0 + "','" + difficulty + "','" + id + "')";
+            //}
+
+            //cmd.ExecuteNonQuery();
 
             MessageBox.Show("Insert is done!");
             sc.Close();
@@ -71,7 +83,15 @@ namespace Sudoku
             sc.Open();
             cmd.Connection = sc;
 
-            cmd.CommandText = "SELECT Id, game, data_of_creation, last_alteration, solution_id, time FROM Game WHERE Id = " + FindLastID();
+            cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + FindLastID();
+            dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+                solution = dr["solution"].ToString();
+
+            dr.Close();
+
+            cmd.CommandText = "SELECT * FROM Game WHERE Id = " + FindLastID();
             dr = cmd.ExecuteReader();
 
             string result = "";
@@ -80,22 +100,49 @@ namespace Sudoku
             {
                 while (dr.Read())
                 {
-                    //result += String.Format("{0} {1} {2} {3} {4} {5}\r\n", dr[0], dr[1], dr[2], dr[3], dr[4], dr[5]);
-                    result += String.Format("{0}\r\n {1}\r\n {2}\r\n {3}\r\n {4}\r\n", dr["Id"], dr["game"], dr["data_of_creation"], dr["last_alteration"], dr["solution_id"], dr["time"]);
+                    result += String.Format("{0}\r\n {1}\r\n {2}\r\n {3}\r\n {4}\r\n {5}\r\n {6}\r\n {7}\r\n", dr["Id"], dr["name"], dr["game"], dr["data_of_creation"], dr["last_alteration"], dr["time"], dr["difficulty"], dr["solution_id"]);
+                    MessageBox.Show(result);
+                    game = dr["game"].ToString();
+                    id = int.Parse(dr["Id"].ToString());
+
                 }
             }
+            else
+            {
+                MessageBox.Show("Не удалось найти сохраненной игры:(");
+            }
 
-            MessageBox.Show(result);
 
+            dr.Close();
             sc.Close();
         }
 
-        public void LoadAllGames()
+        public List<GameInfo> LoadAllGames()
         {
+            List<GameInfo> list = new List<GameInfo>();
 
+            sc.Open();
+            cmd.Connection = sc;
+
+            cmd.CommandText = "SELECT name, data_of_creation, last_alteration, difficulty, time FROM Game";
+            dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    list.Add(new GameInfo(dr["name"].ToString(),
+                        dr["last_alteration"].ToString(),
+                        dr["difficulty"].ToString(),
+                        int.Parse(dr["time"].ToString())));
+                }
+            }
+            sc.Close();
+
+            return list;
         }
 
-        public void SaveGame(string game, string id)
+        public void SaveGame(string game, int id)
         {
 
         }
