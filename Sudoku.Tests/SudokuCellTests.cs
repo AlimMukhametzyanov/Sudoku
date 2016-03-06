@@ -9,13 +9,15 @@ namespace Sudoku.Tests
     {
         private Cell GetTestCell()
         {
-            return new Cell(1,3,new uint?[]{1,2,3});
+            return new Cell(1, 3, new int?[] { 1, 2, 3 });
         }
 
         [TestMethod]
         public void Can_Substitute_Number()
         {
- 
+            var cell = GetTestCell();
+            cell.SetValue(3);
+            Assert.AreEqual(3, cell.Number);
         }
 
 
