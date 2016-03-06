@@ -10,28 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Sudoku
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Start.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Start : Window
     {
-        public MainWindow()
+        public Start()
         {
             InitializeComponent();
         }
-
-        private void Button_NewGame_Click(object sender, RoutedEventArgs e)
-        {
-            Start start = new Start();
-
-            this.Close();
-            start.ShowDialog();
-        }
-
     }
 }
