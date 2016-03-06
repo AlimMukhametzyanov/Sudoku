@@ -17,7 +17,7 @@ namespace Sudoku.SudokuLogic
             get { return number; }
             set
             {
-                if (value > 9 || value == 0)
+                if (value > 9 || value <= 0)
                 { return; }
                 else
                 { number = value; }
@@ -25,7 +25,7 @@ namespace Sudoku.SudokuLogic
         }
         #endregion
 
-        #region Истинное начение клетки
+        #region Истинное значение клетки
         private int? trueNumber;
 
         public int? TrueNumber
@@ -33,8 +33,8 @@ namespace Sudoku.SudokuLogic
             get { return trueNumber; }
             set
             {
-                if (value > 9 || value == 0)
-                { trueNumber = null; }
+                if (value > 9 || value <= 0)
+                { return; }
                 else
                 { trueNumber = value; }
             }
@@ -42,27 +42,41 @@ namespace Sudoku.SudokuLogic
         #endregion
 
         #region Возможные значения, добавляемые пользователем
-        private int?[] probNumbers;
+        private List<int> probNumbers;
 
-        public int?[] ProbNumbers
+        public List<int> ProbNumbers
         {
             get { return probNumbers; }
             set { probNumbers = value; }
         }
-        
-	
+
         #endregion
         #region Конструктор
-        public Cell(int? _number, int? _trueNumber, int?[] _probNumbers)
+        public Cell(int? _number, int? _trueNumber, List<int> _probNumbers)
         {
             number = _number;
             trueNumber = _trueNumber;
             probNumbers = _probNumbers;
         }
         #endregion
+
         public void SetValue(int? newNumber)
         {
             Number = newNumber;
+        }
+
+        public void AddProb(int newProb)
+        {
+            int a = probNumbers.Count;
+            for (int i = 0; i < a; i++)
+            {
+                if (probNumbers[i] == newProb)
+                    return;
+                if (newProb <= 0 || newProb > 9)
+                    return;
+                else
+                    probNumbers.Add(newProb);
+            }
         }
     }
 }
