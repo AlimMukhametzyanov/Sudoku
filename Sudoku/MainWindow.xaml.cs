@@ -20,11 +20,11 @@ namespace Sudoku
     /// </summary>
     public partial class MainWindow : Window
     {
-        int id;
-        static string solution;
-        static string current_game;
-        string difficulty;
-        static string name;
+        static public int id;
+        static public string solution;
+        static public string current_game;
+        public string difficulty;
+        static public string name;
 
         SqlMethods sqlMethods = new SqlMethods();
 
@@ -46,7 +46,6 @@ namespace Sudoku
             start.ShowDialog();
             this.Close();
 
-            sqlMethods.OnCreateNewGame(solution, current_game, name, difficulty, out id);
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)

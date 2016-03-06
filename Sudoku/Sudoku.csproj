@@ -88,9 +88,6 @@
     <Compile Include="SudokuLogic\SudokuBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestWindow.xaml.cs">
-      <DependentUpon>TestWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,10 +101,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SavedGames.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

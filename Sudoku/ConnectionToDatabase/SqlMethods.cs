@@ -64,7 +64,7 @@ namespace Sudoku
             }
             else
             {
-                cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, solution_id, time) VALUES ('" + id + "', '" + name + "', '" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','" + 0 + "','" + difficulty + "','" + id + "')";
+                cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, time, difficulty, solution_id) VALUES ('" + id + "', '" + name + "', '" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','" + 0 + "','" + difficulty + "','" + id + "')";
             }
 
             cmd.ExecuteNonQuery();
