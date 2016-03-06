@@ -88,7 +88,6 @@
     <Compile Include="SudokuLogic\SudokuBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestData.cs" />
     <Compile Include="TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>

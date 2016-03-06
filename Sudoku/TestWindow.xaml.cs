@@ -33,7 +33,6 @@ namespace Sudoku
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            TestData td = new TestData();
             sqlMethods.OnCreateNewGame("111", "2222", "", difficulty, out id);
         }
 
@@ -44,20 +43,27 @@ namespace Sudoku
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
         {
-            SavedGames sv = new SavedGames();
             List<GameInfo> list = sqlMethods.LoadAllGames();
+            
+            if (list == null)
+            {
+                MessageBox.Show("Нет сохраненных игр:(");
+            }
+            else
+            {
+                SavedGames sv = new SavedGames();
+                sv.ShowDialog();
 
-            Dispatcher.Invoke(() =>
-                {
-                    for (int i = 0; i < list.Count; i++)
-			        {
-                        string str = String.Format("{0} | {1} | {2} | {3}", list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed);
-                        sv.cmbSetOfGames.Items.Add(str);
-			        }
-                    sv.cmbSetOfGames.SelectedIndex = 0;
-                });
-
-            sv.ShowDialog();
+                Dispatcher.Invoke(() =>
+                    {
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            string str = String.Format("{0} | {1} | {2} | {3}", list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed);
+                            sv.cmbSetOfGames.Items.Add(str);
+                        }
+                        sv.cmbSetOfGames.SelectedIndex = 0;
+                    });
+            }
         }
 
         private void btnSaveGame_Click(object sender, RoutedEventArgs e)
