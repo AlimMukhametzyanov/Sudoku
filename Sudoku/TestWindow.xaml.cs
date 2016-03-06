@@ -23,6 +23,8 @@ namespace Sudoku
         string solution;
         string current_game;
         string difficulty = "сложная";
+
+        SqlMethods sqlMethods = new SqlMethods();
             
         public TestWindow()
         {
@@ -32,13 +34,12 @@ namespace Sudoku
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             TestData td = new TestData();
-            SqlMethods sqlMethods = new SqlMethods();
             sqlMethods.OnCreateNewGame("111", "2222", difficulty, out id);
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
         {
-
+            sqlMethods.LoadLastGame(ref solution, ref current_game, ref id);
         }
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
