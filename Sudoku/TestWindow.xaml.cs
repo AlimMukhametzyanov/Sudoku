@@ -33,7 +33,7 @@ namespace Sudoku
         {
             TestData td = new TestData();
             SqlMethods sqlMethods = new SqlMethods();
-            sqlMethods.OnCreateNewGame(td.ReadFromFile(@"../../solution.txt"), td.ReadFromFile(@"../../game.txt"), difficulty, out id);
+            sqlMethods.OnCreateNewGame("111", "2222", difficulty, out id);
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
