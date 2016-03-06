@@ -80,6 +80,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="SqlMethods.cs" />
+    <Compile Include="SudokuLogic\Cell.cs" />
+    <Compile Include="SudokuLogic\SudokuBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TestData.cs" />
     <Compile Include="TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
