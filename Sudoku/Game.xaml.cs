@@ -17,9 +17,9 @@ namespace Sudoku
     /// <summary>
     /// Interaction logic for Game.xaml
     /// </summary>
-    public partial class Game : Window
+    public partial class GameMenu : Window
     {
-        public Game()
+        public GameMenu()
         {
             InitializeComponent();
         }
