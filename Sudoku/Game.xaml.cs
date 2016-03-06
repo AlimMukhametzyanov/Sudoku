@@ -19,9 +19,27 @@ namespace Sudoku
     /// </summary>
     public partial class Game : Window
     {
+        SqlMethods sqlMethods = new SqlMethods();
+
         public Game()
         {
             InitializeComponent();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            //Test data
+            current_game = "9,*,8,7,*,1,*,3,2;";
+            id = 2;
+            int time = 37;
+
+            sqlMethods.SaveGame(current_game, id, time);
+            MessageBox.Show("Update is completed");
+        }
+
+        private void btnSaveAndExit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

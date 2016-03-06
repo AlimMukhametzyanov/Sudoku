@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="TestWindow" Height="300" Width="300">
     <Grid>
-        <Button Name="btnNew" Content="New Game" HorizontalAlignment="Left" Margin="105,52,0,0" VerticalAlignment="Top" Width="75" Click="btnNew_Click"/>
-        <Button Name="btnLastGame" Content="Last Game" HorizontalAlignment="Left" Margin="105,91,0,0" VerticalAlignment="Top" Width="75" Click="btnLastGame_Click"/>
-        <Button Name="btnLoadGame" Content="Load Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="105,129,0,0" Click="btnLoadGame_Click"/>
+        <Button Name="btnNew" Content="New Game" HorizontalAlignment="Left" Margin="105,52,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="btnLastGame" Content="Last Game" HorizontalAlignment="Left" Margin="105,91,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="btnLoadGame" Content="Load Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="105,129,0,0"/>
         <Button Name="btnSaveGame" Content="Save Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="105,165,0,0" Click="btnSaveGame_Click"/>
 
     </Grid>

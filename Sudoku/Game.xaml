@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Game" Height="600" Width="500" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="Сохранить и выйти" HorizontalAlignment="Left" Margin="48,483,0,0" VerticalAlignment="Top" Width="195" Height="58"/>
+        <Button Name="btnSaveAndExit" Content="Сохранить и выйти" HorizontalAlignment="Left" Margin="48,483,0,0" VerticalAlignment="Top" Width="195" Height="58" Click="btnSaveAndExit_Click"/>
         <Button Content="Проверить" HorizontalAlignment="Left" Margin="248,420,0,0" VerticalAlignment="Top" Width="195" Height="58"/>
         <Button Content="Помощь" HorizontalAlignment="Left" Margin="248,483,0,0" VerticalAlignment="Top" Width="195" Height="58"/>
-        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="48,420,0,0" VerticalAlignment="Top" Width="195" Height="58"/>
+        <Button Name="btnSave" Content="Сохранить" HorizontalAlignment="Left" Margin="48,420,0,0" VerticalAlignment="Top" Width="195" Height="58" Click="btnSave_Click"/>
         <Canvas HorizontalAlignment="Left" Height="395" Margin="48,10,0,0" VerticalAlignment="Top" Width="395"/>
 
     </Grid>

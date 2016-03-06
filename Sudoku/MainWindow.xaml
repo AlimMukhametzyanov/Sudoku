@@ -9,9 +9,9 @@
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <Image HorizontalAlignment="Left" Height="180" Margin="7,49,0,0" VerticalAlignment="Top" Width="422" Grid.Column="1"/>
-        <Button x:Name="Button_NewGame" Content="Новая игра" HorizontalAlignment="Left" Margin="7,260,0,0" VerticalAlignment="Top" Width="422" Height="82" Background="#FFE0E0E0" FontSize="24" Click="Button_NewGame_Click" Grid.Column="1"/>
-        <Button x:Name="Button_LastGame" Content="Последняя игра" HorizontalAlignment="Left" Margin="7,347,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1"/>
-        <Button x:Name="Button_LoadGame" Content="Загрузить игру" HorizontalAlignment="Left" Margin="7,434,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1"/>
+        <Button Name="btnNewGame" Content="Новая игра" HorizontalAlignment="Left" Margin="7,260,0,0" VerticalAlignment="Top" Width="422" Height="82" Background="#FFE0E0E0" FontSize="24" Grid.Column="1" Click="btnNewGame_Click"/>
+        <Button Name="btnLastGame" Content="Последняя игра" HorizontalAlignment="Left" Margin="7,347,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnLastGame_Click"/>
+        <Button Name="btnLoadGame" Content="Загрузить игру" HorizontalAlignment="Left" Margin="7,434,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnLoadGame_Click"/>
 
     </Grid>
 </Window>
