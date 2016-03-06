@@ -23,6 +23,9 @@ namespace Sudoku
         public MainWindow()
         {
             InitializeComponent();
+            TestWindow tw = new TestWindow();
+            tw.ShowDialog();
+            this.Close();
         }
     }
 }
