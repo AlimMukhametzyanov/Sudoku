@@ -22,18 +22,23 @@ namespace Sudoku
         int id;
         string solution;
         string current_game;
-        string difficulty = "simple";
+        string difficulty;
+        string name;
 
         SqlMethods sqlMethods = new SqlMethods();
             
         public TestWindow()
         {
             InitializeComponent();
+            solution = "1,2,3,4,5,6,7,8,9;";
+            current_game = "1,*,*,4,5,6,*,*,9;";
+            difficulty = "simple";
+            name = null;
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            sqlMethods.OnCreateNewGame("111", "2222", "", difficulty, out id);
+            sqlMethods.OnCreateNewGame(solution, current_game, name, difficulty, out id);
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
@@ -52,7 +57,6 @@ namespace Sudoku
             else
             {
                 SavedGames sv = new SavedGames();
-                sv.ShowDialog();
 
                 Dispatcher.Invoke(() =>
                     {
@@ -63,12 +67,20 @@ namespace Sudoku
                         }
                         sv.cmbSetOfGames.SelectedIndex = 0;
                     });
+
+                sv.ShowDialog();
             }
         }
 
         private void btnSaveGame_Click(object sender, RoutedEventArgs e)
         {
-            sqlMethods.SaveGame(current_game, id);
+            //Test data
+            current_game="9,*,8,7,*,1,*,3,2;";
+            id = 2;
+            int time = 37;
+
+            sqlMethods.SaveGame(current_game, id, time);
+            MessageBox.Show("Update is completed");
         }
     }
 }

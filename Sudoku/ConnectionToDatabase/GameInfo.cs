@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
+    //class for simple dysplaying saved games in SavedGames.xml
     class GameInfo
     {
         private string name;

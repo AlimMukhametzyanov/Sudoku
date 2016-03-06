@@ -72,7 +72,7 @@
       <DependentUpon>Game.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameInfo.cs" />
+    <Compile Include="ConnectionToDatabase\GameInfo.cs" />
     <Compile Include="SavedGames.xaml.cs">
       <DependentUpon>SavedGames.xaml</DependentUpon>
     </Compile>
@@ -83,7 +83,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="SqlMethods.cs" />
+    <Compile Include="ConnectionToDatabase\SqlMethods.cs" />
     <Compile Include="SudokuLogic\Cell.cs" />
     <Compile Include="SudokuLogic\SudokuBox.cs">
       <SubType>Code</SubType>
