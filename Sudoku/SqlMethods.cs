@@ -5,12 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
+using System.Reflection;
+using System.Configuration;
 
 namespace Sudoku
 {
     class SqlMethods
     {
-        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
+        public SqlMethods()
+        {
+            string strPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
+            strPath = strPath.Substring(6, strPath.Length - 15);
+            AppDomain.CurrentDomain.SetData("DataDirectory", strPath);
+        }
+
+        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
 
@@ -19,6 +30,8 @@ namespace Sudoku
             id = 1;
             sc.Open();
             cmd.Connection = sc;
+
+            //узнать
             cmd.CommandText = "SELECT * FROM Solution";
 
             dr = cmd.ExecuteReader();
