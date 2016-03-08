@@ -21,18 +21,20 @@ namespace Sudoku
         }
 
         //Absolute and relative connectionString
-        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
-        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
+        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
 
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
 
-        private int FindLastID()
+        public int FindLastID()
         {
+            sc.Open();
+
             int id = 0;
             cmd.Connection = sc;
 
-            cmd.CommandText = "SELECT * FROM Solution";
+            cmd.CommandText = "SELECT * FROM Game";
 
             dr = cmd.ExecuteReader();
             if (dr.HasRows)
@@ -44,16 +46,17 @@ namespace Sudoku
             }
 
             dr.Close();
+            sc.Close();
 
             return id;
         }
 
         public void OnCreateNewGame(string solution, string game, string name, string difficulty, out int id)
         {
+            id = FindLastID() + 1;
+
             sc.Open();
             cmd.Connection = sc;
-
-            id = FindLastID() + 1;
 
             cmd.CommandText = "INSERT INTO Solution (Id, solution) VALUES ('" + id + "', '" + solution + "')";
             cmd.ExecuteNonQuery();
@@ -69,21 +72,20 @@ namespace Sudoku
 
             cmd.ExecuteNonQuery();
 
-            MessageBox.Show("Insert is done!");
             sc.Close();
         }
 
         public void LoadLastGame(ref string solution, ref string game, ref int id)
         {
-            sc.Open();
-            cmd.Connection = sc;
-
             if (FindLastID() == 0)
             {
                 MessageBox.Show("Не удалось найти сохраненной игры:(");
             }
             else
             {
+                sc.Open();
+                cmd.Connection = sc;
+
                 cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + FindLastID();
                 dr = cmd.ExecuteReader();
 
@@ -95,39 +97,42 @@ namespace Sudoku
                 cmd.CommandText = "SELECT * FROM Game WHERE Id = " + FindLastID();
                 dr = cmd.ExecuteReader();
 
-                string result = "";
+                //string result = "";
 
                 if (dr.HasRows)
                 {
                     while (dr.Read())
                     {
-                        result += String.Format("{0}\r\n {1}\r\n {2}\r\n {3}\r\n {4}\r\n {5}\r\n {6}\r\n {7}\r\n", dr["Id"], dr["name"], dr["game"], dr["data_of_creation"], dr["last_alteration"], dr["time"], dr["difficulty"], dr["solution_id"]);
-                        MessageBox.Show(result);
+                        //result += String.Format("{0}\r\n {1}\r\n {2}\r\n {3}\r\n {4}\r\n {5}\r\n {6}\r\n {7}\r\n", dr["Id"], dr["name"], dr["game"], dr["data_of_creation"], dr["last_alteration"], dr["time"], dr["difficulty"], dr["solution_id"]);
+                        //MessageBox.Show(result);
                         game = dr["game"].ToString();
                         id = int.Parse(dr["Id"].ToString());
 
                     }
                 }
+
+                dr.Close();
+                sc.Close();
             }
 
-            dr.Close();
-            sc.Close();
+            
         }
 
         public List<GameInfo> LoadAllGames()
         {
-            sc.Open();
-            cmd.Connection = sc;
+            
 
             List<GameInfo> list = new List<GameInfo>();
 
             if (FindLastID() == 0)
             {
-                sc.Close();
                 return null;
             }
             else
             {
+                sc.Open();
+                cmd.Connection = sc;
+
                 cmd.CommandText = "SELECT name, data_of_creation, last_alteration, difficulty, time FROM Game";
                 dr = cmd.ExecuteReader();
 
@@ -141,9 +146,9 @@ namespace Sudoku
                             int.Parse(dr["time"].ToString())));
                     }
                 }
-            }
 
-            sc.Close();
+                sc.Close();
+            }
             return list;
         }
 

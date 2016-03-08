@@ -25,7 +25,6 @@ namespace Sudoku
         
         int time;
 
-
         public Game()
         {
             InitializeComponent();
@@ -45,6 +44,12 @@ namespace Sudoku
             time = 37;
 
             sqlMethods.SaveGame(current_game, id, time);
+
+            this.Close();
+
+            MainWindow main = new MainWindow();
+            main.ShowDialog();
+
         }
     }
 }

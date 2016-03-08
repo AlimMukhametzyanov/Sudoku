@@ -81,7 +81,7 @@ namespace Sudoku
                     sv.cmbSetOfGames.SelectedIndex = 0;
                 });
 
-                sv.ShowDialog();
+                sv.Show();
             }
         }
     }
