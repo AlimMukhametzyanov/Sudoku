@@ -19,6 +19,7 @@ namespace Sudoku
     /// </summary>
     public partial class SavedGames : Window
     {
+        SqlMethods sqlMethods = new SqlMethods();
         public SavedGames()
         {
             InitializeComponent();
@@ -26,9 +27,31 @@ namespace Sudoku
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            string solution = null;
+            string current_game = null;
+            int id = cmbSetOfGames.SelectedIndex;
+
             this.Hide();
+
             Game game = new Game();
             game.ShowDialog();
+
+            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
+
+            MainParams.solution = solution;
+            MainParams.current_game = current_game;
+            MainParams.id = id;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBox.Show("Данное окно нельзя закрыть!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Stop);
+            e.Cancel = true;
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

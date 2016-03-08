@@ -22,9 +22,10 @@ namespace Sudoku
         SqlMethods sqlMethods = new SqlMethods();
         Game game = new Game();
 
-        string current_game = MainWindow.current_game;
-        int id = MainWindow.id;
-        string solution = MainWindow.solution;
+        string current_game = MainParams.current_game;
+        int id = MainParams.id;
+        string solution = MainParams.solution;
+
         string difficulty;
 
         public Start()
@@ -61,8 +62,17 @@ namespace Sudoku
                 sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, difficulty, out id);
                 game.ShowDialog();
             }
+        }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBox.Show("Данное окно нельзя закрыть!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Stop);
+            e.Cancel = true;
+        }
 
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Visible: ");
         }
     }
 }

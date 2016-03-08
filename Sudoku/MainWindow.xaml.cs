@@ -20,11 +20,7 @@ namespace Sudoku
     /// </summary>
     public partial class MainWindow : Window
     {
-        static public int id;
-        static public string solution;
-        static public string current_game;
-        public string difficulty;
-        static public string name;
+        
 
         SqlMethods sqlMethods = new SqlMethods();
 
@@ -33,10 +29,9 @@ namespace Sudoku
             InitializeComponent();
 
             //Тестовые данные
-            solution = "1,2,3,4,5,6,7,8,9;";
-            current_game = "1,*,*,4,5,6,*,*,9;";
-            difficulty = "simple";
-            name = null;
+            MainParams.solution = "1,2,3,4,5,6,7,8,9;";
+            MainParams.current_game = "1,*,*,4,5,6,*,*,9;";
+            MainParams.name = null;
         }
 
 
@@ -52,12 +47,23 @@ namespace Sudoku
         {
             this.Hide();
 
-            sqlMethods.LoadLastGame(ref solution, ref current_game, ref id);
+            string solution = null;
+            string current_game = null;
+            int id = -1;
+
+            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
+
+            MainParams.solution = solution;
+            MainParams.current_game = current_game;
+            MainParams.id = id;
+
+            this.Hide();
 
             //переход к Game.xaml
             Game g = new Game();
             g.ShowDialog();
-            this.Close();
+            MessageBox.Show(MainParams.solution + Environment.NewLine + MainParams.current_game + Environment.NewLine + MainParams.id);
+
         }
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
@@ -71,6 +77,7 @@ namespace Sudoku
             else
             {
                 this.Hide();
+
                 SavedGames sv = new SavedGames();
 
                 Dispatcher.Invoke(() =>

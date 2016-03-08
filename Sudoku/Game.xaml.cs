@@ -22,8 +22,8 @@ namespace Sudoku
         SqlMethods sqlMethods = new SqlMethods();
         MainWindow main = new MainWindow();
 
-        string current_game = MainWindow.current_game;
-        int id = MainWindow.id;
+        string current_game = MainParams.current_game;
+        int id = MainParams.id;
         
         int time;
 

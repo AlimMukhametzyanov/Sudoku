@@ -75,55 +75,49 @@ namespace Sudoku
             sc.Close();
         }
 
-        public void LoadLastGame(ref string solution, ref string game, ref int id)
+        public void LoadConcreteGame(ref string solution, ref string game, ref int id)
         {
+            //проверка на наличие игр базе
             if (FindLastID() == 0)
             {
                 MessageBox.Show("Не удалось найти сохраненной игры:(");
+                return;
             }
-            else
-            {
+
+            //если нужно выбрать последнюю игру
+            if (id == -1)
                 id = FindLastID();
 
-                sc.Open();
-                cmd.Connection = sc;
+            sc.Open();
+            cmd.Connection = sc;
 
-                cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + id;
-                dr = cmd.ExecuteReader();
+            cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + id;
+            dr = cmd.ExecuteReader();
 
+            while (dr.Read())
+                solution = dr["solution"].ToString();
+
+            dr.Close();
+
+            cmd.CommandText = "SELECT * FROM Game WHERE Id = " + id;
+            dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
                 while (dr.Read())
-                    solution = dr["solution"].ToString();
-
-                dr.Close();
-
-                cmd.CommandText = "SELECT * FROM Game WHERE Id = " + id;
-                dr = cmd.ExecuteReader();
-
-                //string result = "";
-
-                if (dr.HasRows)
                 {
-                    while (dr.Read())
-                    {
-                        //result += String.Format("{0}\r\n {1}\r\n {2}\r\n {3}\r\n {4}\r\n {5}\r\n {6}\r\n {7}\r\n", dr["Id"], dr["name"], dr["game"], dr["data_of_creation"], dr["last_alteration"], dr["time"], dr["difficulty"], dr["solution_id"]);
-                        //MessageBox.Show(result);
-                        game = dr["game"].ToString();
-                        id = int.Parse(dr["Id"].ToString());
+                    game = dr["game"].ToString();
+                    id = int.Parse(dr["Id"].ToString());
 
-                    }
                 }
-
-                dr.Close();
-                sc.Close();
             }
 
-            
+            dr.Close();
+            sc.Close();
         }
 
         public List<GameInfo> LoadAllGames()
         {
-            
-
             List<GameInfo> list = new List<GameInfo>();
 
             if (FindLastID() == 0)
@@ -158,7 +152,7 @@ namespace Sudoku
         {
             sc.Open();
             cmd.Connection = sc;
-            cmd.CommandText = "UPDATE Game SET game = '" + game + "', last_alteration = '" + DateTime.Now + "', time = '" + time + "' WHERE id = '"+id+"'";
+            cmd.CommandText = "UPDATE Game SET game = '" + game + "', last_alteration = '" + DateTime.Now + "', time = '" + time + "' WHERE id = '" + id + "'";
             cmd.ExecuteNonQuery();
             sc.Close();
         }
