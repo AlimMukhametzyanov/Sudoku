@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -19,6 +21,13 @@ namespace Sudoku
     /// </summary>
     public partial class Start : Window
     {
+        private const int GWL_STYLE = -16;
+        private const int WS_SYSMENU = 0x80000;
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
         SqlMethods sqlMethods = new SqlMethods();
         Game game = new Game();
 
@@ -40,39 +49,37 @@ namespace Sudoku
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            if(cmbDifficulty.SelectedItem!=null)
-            {
-                difficulty = cmbDifficulty.SelectedItem.ToString();
-            }
-            else
-            {
-                MessageBox.Show("Выберите, пожалуйста, сложность!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            this.Hide();
+            difficulty = cmbDifficulty.SelectedItem.ToString();
 
             if (String.IsNullOrEmpty(tbName.Text))
             {
-                sqlMethods.OnCreateNewGame(solution, current_game, null, difficulty, out id);
-                game.ShowDialog();
+                MessageBox.Show("Название для игры не может быть пустым!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
+                this.Close();
                 sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, difficulty, out id);
-                game.ShowDialog();
+                game.Show();
             }
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            MessageBox.Show("Данное окно нельзя закрыть!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Stop);
-            e.Cancel = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Visible: ");
+            this.Close();
+
+            foreach (Window window in App.Current.Windows)
+            {
+                if (window.Visibility == Visibility.Hidden)
+                {
+                    window.Show();
+                }
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
     }
 }

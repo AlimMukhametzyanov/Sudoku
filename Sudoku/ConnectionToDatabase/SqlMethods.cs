@@ -21,8 +21,8 @@ namespace Sudoku
         }
 
         //Absolute and relative connectionString
-        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
-        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
+        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
 
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
@@ -61,28 +61,26 @@ namespace Sudoku
             cmd.CommandText = "INSERT INTO Solution (Id, solution) VALUES ('" + id + "', '" + solution + "')";
             cmd.ExecuteNonQuery();
 
-            if (String.IsNullOrEmpty(name))
-            {
-                cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, time, difficulty, solution_id) VALUES ('" + id + "','" + "game_" + id + "','" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','" + 0 + "','" + difficulty + "','" + id + "')";
-            }
-            else
-            {
-                cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, time, difficulty, solution_id) VALUES ('" + id + "', '" + name + "', '" + game + "','" + DateTime.Now + "','" + DateTime.Now + "','" + 0 + "','" + difficulty + "','" + id + "')";
-            }
+            cmd.CommandText = "INSERT INTO Game (Id, name, game, data_of_creation, last_alteration, time, difficulty, solution_id) VALUES (@id, @name, @game, @date1, @date2, @time, @diff, @sol_id)";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@game", game);
+            cmd.Parameters.AddWithValue("@date1", DateTime.Now);
+            cmd.Parameters.AddWithValue("@date2", DateTime.Now);
+            cmd.Parameters.AddWithValue("@time", 0);
+            cmd.Parameters.AddWithValue("@diff", difficulty);
+            cmd.Parameters.AddWithValue("@sol_id", id);
 
             cmd.ExecuteNonQuery();
 
             sc.Close();
         }
 
-        public void LoadConcreteGame(ref string solution, ref string game, ref int id)
+        public bool LoadConcreteGame(ref string solution, ref string game, ref int id)
         {
             //проверка на наличие игр базе
             if (FindLastID() == 0)
-            {
-                MessageBox.Show("Не удалось найти сохраненной игры:(");
-                return;
-            }
+                return false;
 
             //если нужно выбрать последнюю игру
             if (id == -1)
@@ -114,6 +112,8 @@ namespace Sudoku
 
             dr.Close();
             sc.Close();
+
+            return true;
         }
 
         public List<GameInfo> LoadAllGames()
@@ -142,7 +142,7 @@ namespace Sudoku
                             int.Parse(dr["time"].ToString())));
                     }
                 }
-
+                dr.Close();
                 sc.Close();
             }
             return list;

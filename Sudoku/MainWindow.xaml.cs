@@ -20,8 +20,6 @@ namespace Sudoku
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         SqlMethods sqlMethods = new SqlMethods();
 
         public MainWindow()
@@ -34,13 +32,11 @@ namespace Sudoku
             MainParams.name = null;
         }
 
-
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
             Start start = new Start();
-            start.ShowDialog();
-
+            start.Show();
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
@@ -51,19 +47,17 @@ namespace Sudoku
             string current_game = null;
             int id = -1;
 
-            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
+            if (sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id) == false)
+                MessageBox.Show("Нет сохраненных игр", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
+            else
+                sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
 
             MainParams.solution = solution;
             MainParams.current_game = current_game;
             MainParams.id = id;
 
-            this.Hide();
-
-            //переход к Game.xaml
             Game g = new Game();
-            g.ShowDialog();
-            MessageBox.Show(MainParams.solution + Environment.NewLine + MainParams.current_game + Environment.NewLine + MainParams.id);
-
+            g.Show();
         }
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
@@ -90,7 +84,19 @@ namespace Sudoku
                     sv.cmbSetOfGames.SelectedIndex = 0;
                 });
 
-                sv.ShowDialog();
+                sv.Show();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var result = MessageBox.Show("Вы действительно хотите выйти из игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+
+            if (result == MessageBoxResult.Cancel || result == MessageBoxResult.No)
+                e.Cancel = true;
+            else
+            {
+                App.Current.Shutdown();
             }
         }
     }
