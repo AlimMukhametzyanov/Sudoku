@@ -42,21 +42,22 @@ namespace Sudoku
 
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             Start start = new Start();
             start.ShowDialog();
-            this.Close();
 
         }
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
+
             sqlMethods.LoadLastGame(ref solution, ref current_game, ref id);
 
             //переход к Game.xaml
             Game g = new Game();
             g.ShowDialog();
             this.Close();
-
         }
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
@@ -69,6 +70,7 @@ namespace Sudoku
             }
             else
             {
+                this.Hide();
                 SavedGames sv = new SavedGames();
 
                 Dispatcher.Invoke(() =>
@@ -81,7 +83,7 @@ namespace Sudoku
                     sv.cmbSetOfGames.SelectedIndex = 0;
                 });
 
-                sv.Show();
+                sv.ShowDialog();
             }
         }
     }

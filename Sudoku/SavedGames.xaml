@@ -4,6 +4,7 @@
         Title="SavedGames" Height="200" Width="300" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <ComboBox Name="cmbSetOfGames" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="274"/>
-        <Label Content="Name | Last alteration | Difficulty | Time passed" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Width="274" HorizontalContentAlignment="Center"/>
+        <Label Content="Название | Дата изменения | Сложность | Время" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Width="274" HorizontalContentAlignment="Center"/>
+        <Button Name="btnOk" Content="Ок" HorizontalAlignment="Left" Margin="112,142,0,0" VerticalAlignment="Top" Width="75" Click="btnOk_Click"/>
     </Grid>
 </Window>

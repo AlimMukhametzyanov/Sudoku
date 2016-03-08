@@ -23,5 +23,12 @@ namespace Sudoku
         {
             InitializeComponent();
         }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Game game = new Game();
+            game.ShowDialog();
+        }
     }
 }

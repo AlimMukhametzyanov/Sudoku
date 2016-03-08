@@ -26,7 +26,6 @@ namespace Sudoku
         int id = MainWindow.id;
         string solution = MainWindow.solution;
         string difficulty;
-        string tbNameDefaultText;
 
         public Start()
         {
@@ -35,9 +34,7 @@ namespace Sudoku
             cmbDifficulty.Items.Add("Средняя");
             cmbDifficulty.Items.Add("Сложная");
             cmbDifficulty.SelectedIndex = 0;
-            tbName.MaxLength = 15;
-            tbNameDefaultText = "game_" + (sqlMethods.FindLastID() + 1).ToString();
-            tbName.Text = tbNameDefaultText;
+            tbName.Text = "game_" + (sqlMethods.FindLastID() + 1).ToString();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -52,18 +49,20 @@ namespace Sudoku
                 return;
             }
 
+            this.Hide();
+
             if (String.IsNullOrEmpty(tbName.Text))
             {
                 sqlMethods.OnCreateNewGame(solution, current_game, null, difficulty, out id);
                 game.ShowDialog();
-                //this.Visibility = Visibility.Hidden;
             }
             else
             {
                 sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, difficulty, out id);
                 game.ShowDialog();
-                //this.Visibility = Visibility.Hidden;
             }
+
+
         }
     }
 }

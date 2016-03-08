@@ -83,10 +83,12 @@ namespace Sudoku
             }
             else
             {
+                id = FindLastID();
+
                 sc.Open();
                 cmd.Connection = sc;
 
-                cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + FindLastID();
+                cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + id;
                 dr = cmd.ExecuteReader();
 
                 while (dr.Read())
@@ -94,7 +96,7 @@ namespace Sudoku
 
                 dr.Close();
 
-                cmd.CommandText = "SELECT * FROM Game WHERE Id = " + FindLastID();
+                cmd.CommandText = "SELECT * FROM Game WHERE Id = " + id;
                 dr = cmd.ExecuteReader();
 
                 //string result = "";

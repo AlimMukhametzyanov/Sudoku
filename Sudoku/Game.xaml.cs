@@ -20,6 +20,8 @@ namespace Sudoku
     public partial class Game : Window
     {
         SqlMethods sqlMethods = new SqlMethods();
+        MainWindow main = new MainWindow();
+
         string current_game = MainWindow.current_game;
         int id = MainWindow.id;
         
@@ -36,6 +38,8 @@ namespace Sudoku
             time = 37;
 
             sqlMethods.SaveGame(current_game, id, time);
+
+            main.ShowDialog();
         }
 
         private void btnSaveAndExit_Click(object sender, RoutedEventArgs e)
@@ -47,7 +51,6 @@ namespace Sudoku
 
             this.Close();
 
-            MainWindow main = new MainWindow();
             main.ShowDialog();
 
         }
