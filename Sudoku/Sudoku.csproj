@@ -73,7 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ConnectionToDatabase\GameInfo.cs" />
-    <Compile Include="MainParams.cs" />
     <Compile Include="SavedGames.xaml.cs">
       <DependentUpon>SavedGames.xaml</DependentUpon>
     </Compile>
