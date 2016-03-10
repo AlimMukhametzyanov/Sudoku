@@ -21,8 +21,8 @@ namespace Sudoku
         }
 
         //Absolute and relative connectionString
-        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
-        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
+        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
 
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
@@ -65,7 +65,7 @@ namespace Sudoku
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@game", game);
-            cmd.Parameters.AddWithValue("@date1", DateTime.Now);
+            cmd.Parameters.AddWithValue("@date1", DateTime.Now);    
             cmd.Parameters.AddWithValue("@date2", DateTime.Now);
             cmd.Parameters.AddWithValue("@time", 0);
             cmd.Parameters.AddWithValue("@diff", difficulty);
