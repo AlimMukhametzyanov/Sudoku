@@ -9,6 +9,13 @@ namespace Sudoku
     //class for simple dysplaying saved games in SavedGames.xml
     class GameInfo
     {
+        private int id;
+        public int _id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        
         private string name;
         public string _name
         {
@@ -37,8 +44,9 @@ namespace Sudoku
             set { timePassed = value; }
         }
 
-        public GameInfo(string name, string lastAlteration, string difficulty, int timePassed)
+        public GameInfo(int id, string name, string lastAlteration, string difficulty, int timePassed)
         {
+            this.id = id;
             this.name = name;
             this.lastAlteration = lastAlteration;
             this.difficulty = difficulty;

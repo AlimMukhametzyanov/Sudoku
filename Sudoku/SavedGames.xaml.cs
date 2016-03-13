@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -29,17 +30,31 @@ namespace Sudoku
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         SqlMethods sqlMethods = new SqlMethods();
+        List<GameInfo> list;
 
         public SavedGames()
         {
             InitializeComponent();
+
+            list = sqlMethods.LoadAllGames();
+
+            List<string> cmbItems = new List<string>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                cmbItems.Add(String.Format("{0} | {1} | {2} | {3} | {4}", list[i]._id, list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed));
+                cmbSetOfGames.Items.Add(cmbItems[i]);
+            }
+            cmbSetOfGames.SelectedIndex = 0;
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             string solution = null;
             string current_game = null;
-            int id = cmbSetOfGames.SelectedIndex;
+
+            var elements = cmbSetOfGames.SelectedItem.ToString().Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            int id = int.Parse(elements[0]);
 
             this.Close();
 
@@ -66,10 +81,32 @@ namespace Sudoku
             }
         }
 
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Вы действительно хотите удалить эту игру?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                var elements = cmbSetOfGames.SelectedItem.ToString().Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                int id = int.Parse(elements[0]);
+
+                sqlMethods.DeleteGame(id);
+                cmbSetOfGames.Items.Remove(id);
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

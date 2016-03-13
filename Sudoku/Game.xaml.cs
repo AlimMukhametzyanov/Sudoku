@@ -42,7 +42,7 @@ namespace Sudoku
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //Test data
+            //Test data -> вместо 37 получаем число секунд из таймера
             time = 37;
 
             sqlMethods.SaveGame(current_game, id, time);
@@ -58,12 +58,12 @@ namespace Sudoku
                 return;
             else
             {
-                this.Close();
-
                 //Test data
                 time = 37;
 
                 sqlMethods.SaveGame(current_game, id, time);
+
+                this.Close();
 
                 foreach (Window window in App.Current.Windows)
                 {
@@ -79,6 +79,14 @@ namespace Sudoku
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

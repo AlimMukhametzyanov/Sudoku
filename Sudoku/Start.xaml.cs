@@ -29,10 +29,9 @@ namespace Sudoku
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         SqlMethods sqlMethods = new SqlMethods();
-        Game game = new Game();
 
         string current_game = MainParams.current_game;
-        int id = MainParams.id;
+        int id;
         string solution = MainParams.solution;
 
         string difficulty;
@@ -44,7 +43,7 @@ namespace Sudoku
             cmbDifficulty.Items.Add("Средняя");
             cmbDifficulty.Items.Add("Сложная");
             cmbDifficulty.SelectedIndex = 0;
-            tbName.Text = "game_" + (sqlMethods.FindLastID() + 1).ToString();
+            tbName.Text = "game_" + (sqlMethods.ReturnIdOfLastRow() + 1).ToString();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -58,7 +57,15 @@ namespace Sudoku
             else
             {
                 this.Close();
+
+                //генерация решения и игры
+                //solution = Class.GetSolution();
+                //current_game = Class.GenerateCurrentGame();
                 sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, difficulty, out id);
+
+                MainParams.id = id;
+
+                Game game = new Game();
                 game.Show();
             }
         }
@@ -80,6 +87,14 @@ namespace Sudoku
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

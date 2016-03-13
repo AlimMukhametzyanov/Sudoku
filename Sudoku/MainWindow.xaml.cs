@@ -41,49 +41,37 @@ namespace Sudoku
 
         private void btnLastGame_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-
             string solution = null;
             string current_game = null;
             int id = -1;
 
             if (sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id) == false)
-                MessageBox.Show("Нет сохраненных игр", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Нет сохраненных игр!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
             else
+            {
                 sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
 
-            MainParams.solution = solution;
-            MainParams.current_game = current_game;
-            MainParams.id = id;
+                MainParams.solution = solution;
+                MainParams.current_game = current_game;
+                MainParams.id = id;
 
-            Game g = new Game();
-            g.Show();
+                this.Hide();
+                Game g = new Game();
+                g.Show();
+            }
         }
 
         private void btnLoadGame_Click(object sender, RoutedEventArgs e)
         {
-            List<GameInfo> list = sqlMethods.LoadAllGames();
-
-            if (list == null)
+            if (sqlMethods.LoadAllGames() == null)
             {
-                MessageBox.Show("Нет сохраненных игр:(");
+                MessageBox.Show("Нет сохраненных игр:(", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
                 this.Hide();
 
                 SavedGames sv = new SavedGames();
-
-                Dispatcher.Invoke(() =>
-                {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        string str = String.Format("{0} | {1} | {2} | {3}", list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed);
-                        sv.cmbSetOfGames.Items.Add(str);
-                    }
-                    sv.cmbSetOfGames.SelectedIndex = 0;
-                });
-
                 sv.Show();
             }
         }
@@ -98,6 +86,28 @@ namespace Sudoku
             {
                 App.Current.Shutdown();
             }
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Вы действительно хотите очистить все сохраненные игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Stop);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                sqlMethods.ClearAllData();
+            }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Как же пользоваться нашей программой? Все очень просто...", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            string msg1 = "Создател этой программы - студенты второго курса факультета БиМа школы Бизнес-информатики.\r\n";
+            string msg2 = "Татьяна Тепеницина 143(1)\r\nМухаметзянов Алимбек 143(2)\r\nДмитрий Елисеев 143(2)";
+            MessageBox.Show(msg1 + msg2, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
