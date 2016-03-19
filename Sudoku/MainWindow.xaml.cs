@@ -88,26 +88,10 @@ namespace Sudoku
             }
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Вы действительно хотите очистить все сохраненные игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Stop);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                sqlMethods.ClearAllData();
-            }
-        }
-
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Как же пользоваться нашей программой? Все очень просто...", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
-        {
-            string msg1 = "Создател этой программы - студенты второго курса факультета БиМа школы Бизнес-информатики.\r\n";
-            string msg2 = "Татьяна Тепеницина 143(1)\r\nМухаметзянов Алимбек 143(2)\r\nДмитрий Елисеев 143(2)";
-            MessageBox.Show(msg1 + msg2, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
+            Menu n = new Menu();
+            n.Show();
         }
     }
 }
