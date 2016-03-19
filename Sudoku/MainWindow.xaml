@@ -1,24 +1,18 @@
 ﻿<Window x:Class="Sudoku.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Главное меню" Height="600" Width="500"  Background="White" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        Title="Главное меню" Height="600" Width="500"  Background="White" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="Resources/иконка.png">
     <Grid Margin="0,0,-8,-21">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="12*"/>
             <ColumnDefinition Width="239*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Menu Grid.Column="1" Margin="7,10,389,553" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <MenuItem Header="Меню">
-                <MenuItem Header="Очистить все данные" Click="MenuItem_Click_1"></MenuItem>
-                <MenuItem Header="Справка" Click="MenuItem_Click_2"></MenuItem>
-                <MenuItem Header="О нас" Click="MenuItem_Click_3"></MenuItem>
-            </MenuItem>
-        </Menu>
-        <Image HorizontalAlignment="Left" Height="180" Margin="7,49,0,0" VerticalAlignment="Top" Width="422" Grid.Column="1"/>
-        <Button Name="btnNewGame" Content="Новая игра" HorizontalAlignment="Left" Margin="7,260,0,0" VerticalAlignment="Top" Width="422" Height="82" Background="#FFE0E0E0" FontSize="24" Grid.Column="1" Click="btnNewGame_Click"/>
-        <Button Name="btnLastGame" Content="Последняя игра" HorizontalAlignment="Left" Margin="7,347,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnLastGame_Click"/>
-        <Button Name="btnLoadGame" Content="Загрузить игру" HorizontalAlignment="Left" Margin="7,434,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnLoadGame_Click"/>
+        <Image HorizontalAlignment="Left" Height="177" Margin="124,10,0,0" VerticalAlignment="Top" Width="216" Grid.Column="1" Source="Resources/Лого.png"/>
+        <Button Name="btnNewGame" Content="Новая игра" HorizontalAlignment="Left" Margin="0,198,0,0" VerticalAlignment="Top" Width="422" Height="82" Background="#FFE0E0E0" FontSize="24" Grid.Column="1" Click="btnNewGame_Click"/>
+        <Button Name="btnLastGame" Content="Последняя игра" HorizontalAlignment="Left" Margin="0,286,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnLastGame_Click"/>
+        <Button Name="btnLoadGame" Content="Загрузить игру" HorizontalAlignment="Left" Margin="0,372,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnLoadGame_Click"/>
+        <Button Name="btnMenu" Content="Меню" HorizontalAlignment="Left" Margin="0,459,0,0" VerticalAlignment="Top" Width="422" Height="82" FontSize="24" Grid.Column="1" Click="btnMenu_Click"/>
 
     </Grid>
 </Window>
