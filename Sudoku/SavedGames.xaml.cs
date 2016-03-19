@@ -46,6 +46,7 @@ namespace Sudoku
                 cmbSetOfGames.Items.Add(cmbItems[i]);
             }
             cmbSetOfGames.SelectedIndex = 0;
+
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
