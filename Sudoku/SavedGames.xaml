@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Sudoku.SavedGames"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SavedGames" Height="200" Width="334" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+        Title="SavedGames" Height="200" Width="334" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Icon="Resources/иконка.png">
     <Grid>
         <ComboBox Name="cmbSetOfGames" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="298"/>
         <Label Content="Id | Название | Дата изменения | Сложность | Время" HorizontalAlignment="Left" Margin="6,12,0,0" VerticalAlignment="Top" Width="302" HorizontalContentAlignment="Center"/>

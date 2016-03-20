@@ -39,13 +39,13 @@ namespace Sudoku
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Как же пользоваться нашей программой? Все очень просто...", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Как же пользоваться нашей программой? Все очень просто...Игровое поле имеет размер 9x9 клеток. Границы девяти блоков клеток 3x3 выделены более толстой линией. В некоторых клетках (их меньшинство) расположены цифры от одного до девяти. Необходимо проставить недостающие цифры в пустых клетках, исходя из простого правила - проставленная цифра не должна повторятся по вертикали (в столбце), горизонтали (в строке) и в своем квадрате. Каждое судоку имеет только одно однозначное решение.", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
-            string msg1 = "Создател этой программы - студенты второго курса факультета БиМа школы Бизнес-информатики.\r\n";
-            string msg2 = "Татьяна Тепеницина 143(1)\r\nМухаметзянов Алимбек 143(2)\r\nДмитрий Елисеев 143(2)";
+            string msg1 = "Создатели этой программы - студенты второго курса НИУ ВШЭ.\r\n";
+            string msg2 = "Татьяна Тепеницина\r\nМухаметзянов Алимбек\r\nДмитрий Елисеев";
             MessageBox.Show(msg1 + msg2, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
