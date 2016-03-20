@@ -34,22 +34,14 @@ namespace Sudoku
         int id;
         string solution = MainParams.solution;
 
-        string difficulty;
-
         public Start()
         {
             InitializeComponent();
-            cmbDifficulty.Items.Add("Простая");
-            cmbDifficulty.Items.Add("Средняя");
-            cmbDifficulty.Items.Add("Сложная");
-            cmbDifficulty.SelectedIndex = 0;
             tbName.Text = "game_" + (sqlMethods.ReturnIdOfLastRow() + 1).ToString();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            difficulty = cmbDifficulty.SelectedItem.ToString();
-
             if (String.IsNullOrEmpty(tbName.Text))
             {
                 MessageBox.Show("Название для игры не может быть пустым!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -61,9 +53,10 @@ namespace Sudoku
                 //генерация решения и игры
                 //solution = Class.GetSolution();
                 //current_game = Class.GenerateCurrentGame();
-                sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, difficulty, out id);
+                sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, out id);
 
                 MainParams.id = id;
+                MainParams.name = tbName.Text;
 
                 Game game = new Game();
                 game.Show();

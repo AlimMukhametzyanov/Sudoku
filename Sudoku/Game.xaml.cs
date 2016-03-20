@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Sudoku
 {
@@ -28,40 +30,60 @@ namespace Sudoku
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-        SqlMethods sqlMethods = new SqlMethods();
-
         string current_game = MainParams.current_game;
         int id = MainParams.id;
 
-        int time;
+        SqlMethods sqlMethods = new SqlMethods();
+
+        DispatcherTimer dt = new DispatcherTimer();
+        Stopwatch sw = new Stopwatch();
+        TimeSpan initialTime;
+
+        string timer = "";
 
         public Game()
         {
             InitializeComponent();
+            this.Title = MainParams.name;
+
+            dt.Tick += new EventHandler(tickTimer);
+            dt.Interval = new TimeSpan(0, 0, 0, 0, 1);
+
+            initialTime = formPastTime();
+
+            sw.Start();
+            dt.Start();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //Test data -> вместо 37 получаем число секунд из таймера
-            time = 37;
+            if (sw.IsRunning)
+            {
+                sw.Stop();
+            }  
 
-            sqlMethods.SaveGame(current_game, id, time);
+            sqlMethods.SaveGame(current_game, id, timer);
 
-            MessageBox.Show("Игра сохранена!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
+            var result = MessageBox.Show("Игра сохранена!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            if (result == MessageBoxResult.OK)
+            {
+                sw.Start();
+            }
         }
 
         private void btnSaveAndExit_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Вы хотите сохранить игру и выйти из нее?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
-
-            if (result == MessageBoxResult.Cancel || result == MessageBoxResult.No)
-                return;
-            else
+            if (sw.IsRunning)
             {
-                //Test data
-                time = 37;
+                sw.Stop();
+            }  
 
-                sqlMethods.SaveGame(current_game, id, time);
+            var result = MessageBox.Show("Вы хотите сохранить игру и выйти из нее?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                sqlMethods.SaveGame(current_game, id, timer);
 
                 this.Close();
 
@@ -72,6 +94,10 @@ namespace Sudoku
                         window.Show();
                     }
                 }
+            }
+            else
+            {
+                sw.Start();
             }
         }
 
@@ -87,6 +113,28 @@ namespace Sudoku
             {
                 e.Handled = true;
             }
+        }
+
+        private void tickTimer(object sender, EventArgs e)
+        {
+            if (sw.IsRunning)
+            {
+                var ts = initialTime.Add(sw.Elapsed);
+                timer = String.Format("{0:00}:{1:00}:{2:00}",
+                ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                lTime.Content = timer;
+            }  
+        }
+
+        private TimeSpan formPastTime()
+        {
+            string time = MainParams.time;
+
+            if (String.IsNullOrEmpty(time))
+                return new TimeSpan(0,0,0,0,0);
+
+            var mass = time.Split(':');
+            return new TimeSpan(0, 0, int.Parse(mass[0]), int.Parse(mass[1]), int.Parse(mass[2]));
         }
     }
 }

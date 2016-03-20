@@ -29,10 +29,13 @@ namespace Sudoku
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Вы действительно хотите очистить все сохраненные игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Stop);
+            var result1 = MessageBox.Show("Вы действительно хотите очистить все сохраненные данные, в том числе игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
 
-            if (result == MessageBoxResult.Yes)
+            if (result1 == MessageBoxResult.Yes)
             {
+                var result2 = MessageBox.Show("Вы уверены? Абсолютно все данные будут потеряны!", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Stop);
+
+                if (result2 == MessageBoxResult.Yes)
                 sqlMethods.ClearAllData();
             }
         }

@@ -34,6 +34,7 @@ namespace Sudoku
 
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
+            MainParams.time = null;
             this.Hide();
             Start start = new Start();
             start.Show();
@@ -44,16 +45,20 @@ namespace Sudoku
             string solution = null;
             string current_game = null;
             int id = -1;
+            string name = null;
+            string time = null;
 
-            if (sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id) == false)
-                MessageBox.Show("Нет сохраненных игр!", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref time, ref id) == false)
+                MessageBox.Show("Нет сохраненных игр:(", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
             else
             {
-                sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
+                sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref time, ref id);
 
                 MainParams.solution = solution;
                 MainParams.current_game = current_game;
                 MainParams.id = id;
+                MainParams.name = name;
+                MainParams.time = time;
 
                 this.Hide();
                 Game g = new Game();
@@ -78,7 +83,7 @@ namespace Sudoku
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var result = MessageBox.Show("Вы действительно хотите выйти из игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+            var result = MessageBox.Show("Вы действительно хотите выйти из игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Cancel || result == MessageBoxResult.No)
                 e.Cancel = true;
@@ -91,7 +96,7 @@ namespace Sudoku
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
             Menu n = new Menu();
-            n.Show();
+            n.ShowDialog();
         }
     }
 }
