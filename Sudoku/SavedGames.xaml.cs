@@ -40,7 +40,7 @@ namespace Sudoku
 
             for (int i = 0; i < list.Count; i++)
             {
-                cmbSetOfGames.Items.Add(String.Format("{0} | {1} | {2} | {3} | {4}", list[i]._id, list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed));
+                cmbSetOfGames.Items.Add(String.Format("{0} | {1} | {2} | {3}", list[i]._id, list[i]._name, list[i]._lastAlteration, list[i]._timePassed));
             }
             cmbSetOfGames.SelectedIndex = 0;
 
@@ -50,6 +50,7 @@ namespace Sudoku
         {
             string solution = null;
             string current_game = null;
+            string time = null;
 
             var elements = cmbSetOfGames.SelectedItem.ToString().Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int id = int.Parse(elements[0]);
@@ -57,12 +58,13 @@ namespace Sudoku
 
             this.Close();
 
-            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref id);
+            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref time, ref id);
 
             MainParams.solution = solution;
             MainParams.current_game = current_game;
             MainParams.id = id;
             MainParams.name = name;
+            MainParams.time = time;
 
             Game game = new Game();
             game.Show();

@@ -45,17 +45,19 @@ namespace Sudoku
             string current_game = null;
             int id = -1;
             string name = null;
+            string time = null;
 
-            if (sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref id) == false)
+            if (sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref time, ref id) == false)
                 MessageBox.Show("Нет сохраненных игр:(", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
             else
             {
-                sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref id);
+                sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref time, ref id);
 
                 MainParams.solution = solution;
                 MainParams.current_game = current_game;
                 MainParams.id = id;
                 MainParams.name = name;
+                MainParams.time = time;
 
                 this.Hide();
                 Game g = new Game();

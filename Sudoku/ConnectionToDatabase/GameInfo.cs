@@ -30,26 +30,18 @@ namespace Sudoku
             set { lastAlteration = value; }
         }
 
-        private string difficulty;
-        public string _difficulty
-        {
-            get { return difficulty; }
-            set { difficulty = value; }
-        }
-
-        private int timePassed;
-        public int _timePassed
+        private string timePassed;
+        public string _timePassed
         {
             get { return timePassed; }
             set { timePassed = value; }
         }
 
-        public GameInfo(int id, string name, string lastAlteration, string difficulty, int timePassed)
+        public GameInfo(int id, string name, string lastAlteration, string timePassed)
         {
             this.id = id;
             this.name = name;
             this.lastAlteration = lastAlteration;
-            this.difficulty = difficulty;
             this.timePassed = timePassed;
         }
         
