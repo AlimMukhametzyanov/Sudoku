@@ -46,6 +46,8 @@ namespace Sudoku
             InitializeComponent();
             this.Title = MainParams.name;
 
+            //обновить интерфейс из строки
+
             dt.Tick += new EventHandler(tickTimer);
             dt.Interval = new TimeSpan(0, 0, 0, 0, 1);
 
@@ -135,6 +137,15 @@ namespace Sudoku
 
             var mass = time.Split(':');
             return new TimeSpan(0, 0, int.Parse(mass[0]), int.Parse(mass[1]), int.Parse(mass[2])*10);
+        }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            string ms1 = "Как же пользоваться нашей программой? Все очень просто...Игровое поле имеет размер 9x9 клеток.";
+            string ms2 = " Границы девяти блоков клеток 3x3 выделены более толстой линией. В некоторых клетках (их меньшинство) расположены цифры от одного до девяти.";
+            string ms3 = " Необходимо проставить недостающие цифры в пустых клетках, исходя из простого правила - проставленная цифра не должна повторятся по вертикали";
+            string ms4 = " (в столбце), горизонтали (в строке) и в своем квадрате. Каждое судоку имеет только одно однозначное решение.";
+            MessageBox.Show(ms1 + ms2 + ms3 + ms4, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -151,7 +151,6 @@
       <DependentUpon>Game.mdf</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Лого.png" />
     <Resource Include="Resources\большая_иконка.png" />
     <Resource Include="Resources\m_icon.jpg" />
     <Resource Include="Resources\иконка.png" />

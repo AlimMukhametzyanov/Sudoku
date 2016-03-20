@@ -7,7 +7,7 @@
         <Button Content="О нас" Name="btnAbout" HorizontalAlignment="Left" Margin="192,125,0,0" VerticalAlignment="Top" Width="88" Height="27" Click="btnAbout_Click"/>
         <Button Content="Справка" Name="btnHelp" HorizontalAlignment="Left" Margin="99,125,0,0" VerticalAlignment="Top" Width="88" Height="27" Click="btnHelp_Click"/>
         <Image HorizontalAlignment="Left" Height="101" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/большая_иконка.png" Width="116" RenderTransformOrigin="0.5,0.69" Stretch="Fill"/>
-        <Label Content="udoky" HorizontalAlignment="Left" Margin="126,46,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold" FontFamily="Engravers MT" Width="149"/>
+        <Label Content="udoky" HorizontalAlignment="Left" Margin="126,46,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold" FontFamily="Engravers MT" Width="149" Foreground="#FF636363"/>
 
     </Grid>
 </Window>

@@ -5,7 +5,7 @@
     <Grid>
         <Button Name="btnSaveAndExit" Content="Сохранить и выйти" HorizontalAlignment="Left" Margin="48,483,0,0" VerticalAlignment="Top" Width="195" Height="58" Click="btnSaveAndExit_Click"/>
         <Button Content="Проверить" HorizontalAlignment="Left" Margin="248,420,0,0" VerticalAlignment="Top" Width="195" Height="58"/>
-        <Button Content="Помощь" HorizontalAlignment="Left" Margin="248,483,0,0" VerticalAlignment="Top" Width="195" Height="58"/>
+        <Button Name ="btnHelp" Content="Помощь" HorizontalAlignment="Left" Margin="248,483,0,0" VerticalAlignment="Top" Width="195" Height="58" Click="btnHelp_Click"/>
         <Button Name="btnSave" Content="Сохранить" HorizontalAlignment="Left" Margin="48,420,0,0" VerticalAlignment="Top" Width="195" Height="58" Click="btnSave_Click"/>
         <Canvas HorizontalAlignment="Left" Height="351" Margin="48,54,0,0" VerticalAlignment="Top" Width="395"/>
         <Label Name="lTime" Content="" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" Width="332" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
