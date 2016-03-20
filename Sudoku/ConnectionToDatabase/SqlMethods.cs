@@ -123,7 +123,9 @@ namespace Sudoku
                     solution = dr["solution"].ToString();
 
                 dr.Close();
+                sc.Close();
 
+                sc.Open();
                 cmd.CommandText = "SELECT * FROM Game WHERE Id = " + id;
                 dr = cmd.ExecuteReader();
 

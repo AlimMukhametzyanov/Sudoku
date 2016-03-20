@@ -6,7 +6,7 @@
         <Button Content="Очистить всё" Name="btnClear" HorizontalAlignment="Left" Margin="6,125,0,0" VerticalAlignment="Top" Width="88" Height="27" Click="btnClear_Click" Background="#FFFF7373"/>
         <Button Content="О нас" Name="btnAbout" HorizontalAlignment="Left" Margin="192,125,0,0" VerticalAlignment="Top" Width="88" Height="27" Click="btnAbout_Click"/>
         <Button Content="Справка" Name="btnHelp" HorizontalAlignment="Left" Margin="99,125,0,0" VerticalAlignment="Top" Width="88" Height="27" Click="btnHelp_Click"/>
-        <Image HorizontalAlignment="Left" Height="98" Margin="50,10,0,0" VerticalAlignment="Top" Width="200" Source="Resources/file-5.gif" RenderTransformOrigin="0.5,0.69"/>
+        <Image HorizontalAlignment="Left" Height="101" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/m_icon.jpg" Width="270" RenderTransformOrigin="0.5,0.69" Stretch="Fill"/>
 
     </Grid>
 </Window>

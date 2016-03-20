@@ -36,13 +36,17 @@ namespace Sudoku
                 var result2 = MessageBox.Show("Вы уверены? Абсолютно все данные будут потеряны!", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Stop);
 
                 if (result2 == MessageBoxResult.Yes)
-                sqlMethods.ClearAllData();
+                    sqlMethods.ClearAllData();
             }
         }
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Как же пользоваться нашей программой? Все очень просто...Игровое поле имеет размер 9x9 клеток. Границы девяти блоков клеток 3x3 выделены более толстой линией. В некоторых клетках (их меньшинство) расположены цифры от одного до девяти. Необходимо проставить недостающие цифры в пустых клетках, исходя из простого правила - проставленная цифра не должна повторятся по вертикали (в столбце), горизонтали (в строке) и в своем квадрате. Каждое судоку имеет только одно однозначное решение.", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
+            string ms1 = "Как же пользоваться нашей программой? Все очень просто...Игровое поле имеет размер 9x9 клеток.";
+            string ms2 = " Границы девяти блоков клеток 3x3 выделены более толстой линией. В некоторых клетках (их меньшинство) расположены цифры от одного до девяти.";
+            string ms3 = " Необходимо проставить недостающие цифры в пустых клетках, исходя из простого правила - проставленная цифра не должна повторятся по вертикали";
+            string ms4 = " (в столбце), горизонтали (в строке) и в своем квадрате. Каждое судоку имеет только одно однозначное решение.";
+            MessageBox.Show(ms1+ms2+ms3+ms4, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)

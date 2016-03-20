@@ -134,7 +134,7 @@ namespace Sudoku
                 return new TimeSpan(0,0,0,0,0);
 
             var mass = time.Split(':');
-            return new TimeSpan(0, 0, int.Parse(mass[0]), int.Parse(mass[1]), int.Parse(mass[2]));
+            return new TimeSpan(0, 0, int.Parse(mass[0]), int.Parse(mass[1]), int.Parse(mass[2])*10);
         }
     }
 }

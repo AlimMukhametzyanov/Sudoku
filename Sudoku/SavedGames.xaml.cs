@@ -42,7 +42,7 @@ namespace Sudoku
             {
                 cmbSetOfGames.Items.Add(String.Format("{0} | {1} | {2} | {3}", list[i]._id, list[i]._name, list[i]._lastAlteration, list[i]._timePassed));
             }
-            cmbSetOfGames.SelectedIndex = 0;
+            cmbSetOfGames.SelectedIndex = list.Count-1;
 
         }
 
