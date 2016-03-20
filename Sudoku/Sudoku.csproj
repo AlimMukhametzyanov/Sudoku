@@ -90,10 +90,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="ConnectionToDatabase\SqlMethods.cs" />
-    <Compile Include="SudokuLogic\Cell.cs" />
-    <Compile Include="SudokuLogic\SudokuBox.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,6 +132,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -154,10 +151,10 @@
       <DependentUpon>Game.mdf</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Лого.png" />
     <Resource Include="Resources\большая_иконка.png" />
     <Resource Include="Resources\m_icon.jpg" />
     <Resource Include="Resources\иконка.png" />
-    <Resource Include="Resources\Лого.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
