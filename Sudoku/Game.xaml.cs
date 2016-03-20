@@ -79,7 +79,7 @@ namespace Sudoku
                 sw.Stop();
             }  
 
-            var result = MessageBox.Show("Вы хотите сохранить игру и выйти из нее?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+            var result = MessageBox.Show("Вы хотите сохранить игру и выйти из нее?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {

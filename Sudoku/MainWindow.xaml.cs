@@ -34,6 +34,7 @@ namespace Sudoku
 
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
+            MainParams.time = null;
             this.Hide();
             Start start = new Start();
             start.Show();
@@ -82,7 +83,7 @@ namespace Sudoku
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var result = MessageBox.Show("Вы действительно хотите выйти из игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+            var result = MessageBox.Show("Вы действительно хотите выйти из игры?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Cancel || result == MessageBoxResult.No)
                 e.Cancel = true;

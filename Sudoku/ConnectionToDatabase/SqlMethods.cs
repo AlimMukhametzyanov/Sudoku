@@ -21,8 +21,8 @@ namespace Sudoku
         }
 
         //Absolute and relative connectionString
-        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
-        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
+        SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Game.mdf;Integrated Security=True");
+        //SqlConnection sc = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\User\Source\Repos\Sudoku\Sudoku\Game.mdf;Integrated Security=True");
 
         SqlCommand cmd = new SqlCommand();
         SqlDataReader dr;
@@ -30,27 +30,35 @@ namespace Sudoku
         private int FindIdOfLastRow()
         {
             int id = 0;
-
-            sc.Open();
-            cmd.Connection = sc;
-
-            cmd.CommandText = "SELECT MAX (Id) FROM Solution";
-            dr = cmd.ExecuteReader();
-
-            while (dr.Read())
+            try
             {
-                if (dr.IsDBNull(0))
+                sc.Open();
+                cmd.Connection = sc;
+
+                cmd.CommandText = "SELECT MAX (Id) FROM Solution";
+                dr = cmd.ExecuteReader();
+
+                while (dr.Read())
                 {
-                    id = 0;
-                }
-                else
-                {
-                    id = int.Parse(dr[0].ToString());
+                    if (dr.IsDBNull(0))
+                    {
+                        id = 0;
+                    }
+                    else
+                    {
+                        id = int.Parse(dr[0].ToString());
+                    }
                 }
             }
-
-            dr.Close();
-            sc.Close();
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                dr.Close();
+                sc.Close();
+            }
 
             return id;
         }
@@ -62,25 +70,37 @@ namespace Sudoku
 
         public void OnCreateNewGame(string solution, string game, string name, out int id)
         {
-            sc.Open();
-            cmd.Connection = sc;
-            cmd.CommandText = "INSERT INTO Solution (solution) VALUES ('" + solution + "')";
-            cmd.ExecuteNonQuery();
-            sc.Close();
+            id = 0;
 
-            id = FindIdOfLastRow();
+            try
+            {
+                sc.Open();
+                cmd.Connection = sc;
+                cmd.CommandText = "INSERT INTO Solution (solution) VALUES ('" + solution + "')";
+                cmd.ExecuteNonQuery();
+                sc.Close();
 
-            sc.Open();
-            cmd.Connection = sc;
-            cmd.CommandText = "INSERT INTO Game (name, game, data_of_creation, last_alteration, time, solution_id) VALUES (@name, @game, @date1, @date2, @time, @sol_id)";
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@game", game);
-            cmd.Parameters.AddWithValue("@date1", DateTime.Now.ToString());
-            cmd.Parameters.AddWithValue("@date2", DateTime.Now.ToString());
-            cmd.Parameters.AddWithValue("@time", 0);
-            cmd.Parameters.AddWithValue("@sol_id", id);
-            cmd.ExecuteNonQuery();
-            sc.Close();
+                id = FindIdOfLastRow();
+
+                sc.Open();
+                cmd.Connection = sc;
+                cmd.CommandText = "INSERT INTO Game (name, game, data_of_creation, last_alteration, time, solution_id) VALUES (@name, @game, @date1, @date2, @time, @sol_id)";
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@game", game);
+                cmd.Parameters.AddWithValue("@date1", DateTime.Now.ToString());
+                cmd.Parameters.AddWithValue("@date2", DateTime.Now.ToString());
+                cmd.Parameters.AddWithValue("@time", 0);
+                cmd.Parameters.AddWithValue("@sol_id", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sc.Close();
+            }
         }
 
         public bool LoadConcreteGame(ref string solution, ref string game, ref string name, ref string time, ref int id)
@@ -92,30 +112,39 @@ namespace Sudoku
             //если нужно выбрать последнюю игру
             if (id == -1)
                 id = FindIdOfLastRow();
-
-            sc.Open();
-            cmd.Connection = sc;
-            cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + id;
-            dr = cmd.ExecuteReader();
-
-            while (dr.Read())
-                solution = dr["solution"].ToString();
-
-            dr.Close();
-
-            cmd.CommandText = "SELECT * FROM Game WHERE Id = " + id;
-            dr = cmd.ExecuteReader();
-
-            while (dr.Read())
+            try
             {
-                game = dr["game"].ToString();
-                id = int.Parse(dr["Id"].ToString());
-                name = dr["name"].ToString();
-                time = dr["time"].ToString();
+                sc.Open();
+                cmd.Connection = sc;
+                cmd.CommandText = "SELECT * FROM Solution WHERE Id = " + id;
+                dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                    solution = dr["solution"].ToString();
+
+                dr.Close();
+
+                cmd.CommandText = "SELECT * FROM Game WHERE Id = " + id;
+                dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    game = dr["game"].ToString();
+                    id = int.Parse(dr["Id"].ToString());
+                    name = dr["name"].ToString();
+                    time = dr["time"].ToString();
+                }
             }
 
-            dr.Close();
-            sc.Close();
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                dr.Close();
+                sc.Close();
+            }
 
             return true;
         }
@@ -130,54 +159,95 @@ namespace Sudoku
             }
             else
             {
-                sc.Open();
-                cmd.Connection = sc;
-                cmd.CommandText = "SELECT Id, name, data_of_creation, last_alteration, time FROM Game";
-                dr = cmd.ExecuteReader();
-
-                if (dr.HasRows)
+                try
                 {
-                    while (dr.Read())
+                    sc.Open();
+                    cmd.Connection = sc;
+                    cmd.CommandText = "SELECT Id, name, data_of_creation, last_alteration, time FROM Game";
+                    dr = cmd.ExecuteReader();
+
+                    if (dr.HasRows)
                     {
-                        list.Add(new GameInfo(int.Parse(dr["Id"].ToString()), dr["name"].ToString(),
-                            dr["last_alteration"].ToString(),
-                            dr["time"].ToString()));
+                        while (dr.Read())
+                        {
+                            list.Add(new GameInfo(int.Parse(dr["Id"].ToString()), dr["name"].ToString(),
+                                dr["last_alteration"].ToString(),
+                                dr["time"].ToString()));
+                        }
                     }
                 }
-                dr.Close();
-                sc.Close();
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                finally
+                {
+                    dr.Close();
+                    sc.Close();
+                }
             }
+
             return list;
         }
 
         public void SaveGame(string game, int id, string time)
         {
-            sc.Open();
-            cmd.Connection = sc;
-            cmd.CommandText = "UPDATE Game SET game = '" + game + "', last_alteration = '"+DateTime.Now+"', time = '" + time + "' WHERE id = '" + id + "'";
-            cmd.ExecuteNonQuery();
-            sc.Close();
+            try
+            {
+                sc.Open();
+                cmd.Connection = sc;
+                cmd.CommandText = "UPDATE Game SET game = '" + game + "', last_alteration = '" + DateTime.Now + "', time = '" + time + "' WHERE id = '" + id + "'";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sc.Close();
+            }
         }
 
         public void DeleteGame(int id)
         {
-            sc.Open();
-            cmd.Connection = sc;
-            cmd.CommandText = @"DELETE FROM Game WHERE Id = '" + id + "' DELETE FROM Solution WHERE Id = '" + id + "'";
-            cmd.ExecuteNonQuery();
-            sc.Close();
+            try
+            {
+                sc.Open();
+                cmd.Connection = sc;
+                cmd.CommandText = @"DELETE FROM Game WHERE Id = '" + id + "' DELETE FROM Solution WHERE Id = '" + id + "'";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sc.Close();
+            }
         }
 
         public void ClearAllData()
         {
-            sc.Open();
-            cmd.Connection = sc;
-            cmd.CommandText = @"TRUNCATE TABLE Game   
+            try
+            {
+                sc.Open();
+                cmd.Connection = sc;
+                cmd.CommandText = @"TRUNCATE TABLE Game   
                                 ALTER TABLE Game DROP CONSTRAINT [FK_Game_ToSolution]
                                 TRUNCATE TABLE Solution
                                 ALTER TABLE Game ADD CONSTRAINT [FK_Game_ToSolution] FOREIGN KEY ([solution_id]) REFERENCES [dbo].[Solution] ([Id])";
-            cmd.ExecuteNonQuery();
-            sc.Close();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Sudoku", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sc.Close();
+            }
         }
     }
 }
