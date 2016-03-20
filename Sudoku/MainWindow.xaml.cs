@@ -52,8 +52,6 @@ namespace Sudoku
                 MessageBox.Show("Нет сохраненных игр:(", "Sudoku", MessageBoxButton.OK, MessageBoxImage.Warning);
             else
             {
-                sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref time, ref id);
-
                 MainParams.solution = solution;
                 MainParams.current_game = current_game;
                 MainParams.id = id;
