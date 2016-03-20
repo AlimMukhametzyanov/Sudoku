@@ -38,6 +38,7 @@ namespace Sudoku
         public Game()
         {
             InitializeComponent();
+            this.Title = MainParams.name;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -54,9 +55,7 @@ namespace Sudoku
         {
             var result = MessageBox.Show("Вы хотите сохранить игру и выйти из нее?", "Sudoku", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Cancel || result == MessageBoxResult.No)
-                return;
-            else
+            if (result == MessageBoxResult.Yes)
             {
                 //Test data
                 time = 37;

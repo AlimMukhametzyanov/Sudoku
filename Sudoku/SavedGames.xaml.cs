@@ -38,12 +38,9 @@ namespace Sudoku
 
             list = sqlMethods.LoadAllGames();
 
-            List<string> cmbItems = new List<string>();
-
             for (int i = 0; i < list.Count; i++)
             {
-                cmbItems.Add(String.Format("{0} | {1} | {2} | {3} | {4}", list[i]._id, list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed));
-                cmbSetOfGames.Items.Add(cmbItems[i]);
+                cmbSetOfGames.Items.Add(String.Format("{0} | {1} | {2} | {3} | {4}", list[i]._id, list[i]._name, list[i]._lastAlteration, list[i]._difficulty, list[i]._timePassed));
             }
             cmbSetOfGames.SelectedIndex = 0;
 
@@ -56,17 +53,19 @@ namespace Sudoku
 
             var elements = cmbSetOfGames.SelectedItem.ToString().Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int id = int.Parse(elements[0]);
+            string name = elements[1];
 
             this.Close();
 
-            Game game = new Game();
-            game.Show();
-
-            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref id);
+            sqlMethods.LoadConcreteGame(ref solution, ref current_game, ref name, ref id);
 
             MainParams.solution = solution;
             MainParams.current_game = current_game;
             MainParams.id = id;
+            MainParams.name = name;
+
+            Game game = new Game();
+            game.Show();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -93,6 +92,11 @@ namespace Sudoku
 
                 sqlMethods.DeleteGame(id);
                 cmbSetOfGames.Items.Remove(id);
+
+                this.Close();
+
+                SavedGames sv = new SavedGames();
+                sv.Show();
             }
         }
 

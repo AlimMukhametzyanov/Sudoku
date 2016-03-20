@@ -64,6 +64,7 @@ namespace Sudoku
                 sqlMethods.OnCreateNewGame(solution, current_game, tbName.Text, difficulty, out id);
 
                 MainParams.id = id;
+                MainParams.name = tbName.Text;
 
                 Game game = new Game();
                 game.Show();
